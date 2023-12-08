@@ -8,8 +8,7 @@ import express from 'express';
 
 
 
-
-    
+const app =express();
 
 
 
@@ -47,14 +46,15 @@ async function run() {
   }
 }
 
-const app =express();
+
 app.listen
 ( 8800, ()=>{
     run();
     console.log("Server is running on port 3000");
     });
 
-    
+
+
 
 
 
