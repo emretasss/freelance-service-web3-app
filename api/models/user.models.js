@@ -7,7 +7,35 @@ const blogSchema = new Schema({
         required:true,
         unique:true,
     },
-   
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
+    country:{
+        type:String,
+        required:true,
+    },
+    phone:{
+        type:String,
+        required:false,
+    },
+    desc:{
+        type:String,
+        required:false,
+    },
+    isSeller:{
+        type:Boolean,
+        default:false
+    },
+    desc:{
+        type:String,
+        required:false,
+    },
+    desc:{
+        type:String,
+        required:false,
+    },
 
 
 
