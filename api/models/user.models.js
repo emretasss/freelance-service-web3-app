@@ -27,8 +27,9 @@ const blogSchema = new Schema({
     isSeller:{
         type:Boolean,
         default:false
-    }
-
-
-
-});
+    },
+},
+{
+    timestamps:true
+}
+);
