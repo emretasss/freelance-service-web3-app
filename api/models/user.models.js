@@ -27,15 +27,7 @@ const blogSchema = new Schema({
     isSeller:{
         type:Boolean,
         default:false
-    },
-    desc:{
-        type:String,
-        required:false,
-    },
-    desc:{
-        type:String,
-        required:false,
-    },
+    }
 
 
 
