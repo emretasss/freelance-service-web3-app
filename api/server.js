@@ -1,64 +1,32 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
-
-import { configDotenv } from 'dotenv';
-
-import express from 'express';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 
 
+const app = express();
+dotenv.config();
+mongoose.set("strictQuery", true);
 
-
-const app =express();
-
-
-
-
-
-
-
-
-
-
-
-
-configDotenv();
-const uri = process.env.MONGO;
-
-
-
-
-
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO);
+    console.log("Connected to mongoDB!");
+  } catch (error) {
+    console.log(error);
   }
+};
+
+
+
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
+
+  return res.status(errorStatus).send(errorMessage);
 });
 
-async function run() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    await client.close();
-  }
-}
-
-
-app.listen
-( 8800, ()=>{
-    run();
-    console.log("Server is running on port 3000");
-    });
-
-
-
-
-
-
-
-
-
-
+app.listen(8800, () => {
+  connect();
+  console.log("Backend server is running!");
+});
