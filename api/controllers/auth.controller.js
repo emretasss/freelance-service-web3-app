@@ -1,10 +1,16 @@
-export const register= (req,res) => {
+export const register= async (req,res) => {
     try{
         const newUser =new User({
-            username:"test"
+            username:"test",
+            email:"test",
+            password:"test",
+            country:"test",
+            
         })
-
         
+        await newUser.save();
+
+
 
 
     }
