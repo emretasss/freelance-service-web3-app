@@ -7,8 +7,7 @@ export const register = async (req, res, next) => {
   try {
     const hash = bcrypt.hashSync(req.body.password, 5);
     const newUser = new User({
-        username: "test",
-        email: " test",
+      ...req.body,
       password: hash,
     });
 
