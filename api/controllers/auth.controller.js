@@ -9,7 +9,8 @@ export const register= async (req,res) => {
         })
         
         await newUser.save();
-
+        res.status(201).send("user has been created");
+   
 
 
 
