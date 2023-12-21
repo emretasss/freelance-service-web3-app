@@ -10,7 +10,12 @@ export const createConversation = async (req, res, next) => {
     readByBuyer: !req.isSeller,
   });
 
-  
+  try {
+    const savedConversation = await newConversation.save();
+    res.status(201).send(savedConversation);
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const updateConversation = async (req, res, next) => {
