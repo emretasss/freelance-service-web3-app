@@ -30,6 +30,9 @@ app.use((err, req, res, next) => {
   return res.status(errorStatus).send(errorMessage);
 });
 
+
+app.use(express.json());
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/gigs", gigRoute);
