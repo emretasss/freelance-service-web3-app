@@ -3,6 +3,7 @@ import createError from "../utils/createError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 export const register = async (req, res, next) => {
   try {
     const hash = bcrypt.hashSync(req.body.password, 5);
@@ -34,6 +35,7 @@ export const login = async (req, res, next) => {
       },
       process.env.JWT_KEY
     );
+    
 
     const { password, ...info } = user._doc;
     res
