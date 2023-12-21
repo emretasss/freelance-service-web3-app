@@ -19,24 +19,7 @@ export const createConversation = async (req, res, next) => {
 };
 
 export const updateConversation = async (req, res, next) => {
-  try {
-    const updatedConversation = await Conversation.findOneAndUpdate(
-      { id: req.params.id },
-      {
-        $set: {
-          // readBySeller: true,
-          // readByBuyer: true,
-          ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
-        },
-      },
-      { new: true }
-    );
-
-    res.status(200).send(updatedConversation);
-  } catch (err) {
-    next(err);
-  }
-};
+}
 
 export const getSingleConversation = async (req, res, next) => {
   try {
