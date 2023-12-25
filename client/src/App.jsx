@@ -13,6 +13,7 @@ import Orders from "./pages/orders/Orders";
 import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import MyGigs from "./pages/myGigs/MyGigs";
+import  Web3Modal  from './context/Web3Modal'
 import {
   QueryClient,
   QueryClientProvider,
@@ -84,6 +85,10 @@ function App() {
           element: <Pay />,
         },
         {
+          path: "/pay",
+          element: <Pay />,
+        },
+        {
           path: "/success",
           element: <Success />,
         },
@@ -91,7 +96,13 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+    <Web3Modal> 
+    <RouterProvider router={router} />
+    </Web3Modal>  
+    </>
+  );
 }
 
 export default App;

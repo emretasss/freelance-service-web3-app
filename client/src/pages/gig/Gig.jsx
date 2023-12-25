@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import { useState } from "react";
+import  PayFiver from "./pay.jsx"
 
 function Gig() {
   const { id } = useParams();
@@ -16,6 +18,14 @@ function Gig() {
         return res.data;
       }),
   });
+
+  const [isPayBytetaskVisible, setIsPayBytetaskVisible] = useState(false);
+  const handleDevamEtClick = () => {
+    setIsPayBytetaskVisible(true);
+  };
+  const handleOutsideClick = () => {
+    setIsPayBytetaskVisible(false);
+  };
 
   const userId = data?.userId;
 
@@ -156,10 +166,26 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`}>
-            <button>Continue</button>
-            </Link>
+
+            <button
+              onClick={handleDevamEtClick}
+            >Continue</button>
+
           </div>
+        </div>
+
+      )}
+      {isPayBytetaskVisible && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
+          <div className="flex justify-end" onClick={handleOutsideClick}>
+            <button className="fixed transform translate-y-24 -translate-x-4 ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-white ">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <PayFiver/>
+
         </div>
       )}
     </div>
