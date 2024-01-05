@@ -14,7 +14,7 @@ function PayFiver() {
     const [debouncedTo] = useDebounce(to, 500)
 
 
-    const [debouncedAmount] = useDebounce(10, 500)
+    const [debouncedAmount] = useDebounce(151, 500)
 
     const { config } = usePrepareSendTransaction({
         to: debouncedTo,

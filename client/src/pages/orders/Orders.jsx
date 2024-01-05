@@ -3,74 +3,70 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Orders.scss";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+import { createWalletClient, http, parseEther } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { foundry } from 'viem/chains'
+
+const account = privateKeyToAccount('0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d')
+const transport = http('http://127.0.0.1:8545')
+const client = createWalletClient({
+  account,
+  chain: foundry,
+  transport
+})
+
 
 const Orders = () => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  const navigate = useNavigate();
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () =>
-      newRequest.get(`/orders`).then((res) => {
-        return res.data;
-      }),
-  });
+  async function sendByt(addr, amount) {
 
-  const handleContact = async (order) => {
-    const sellerId = order.sellerId;
-    const buyerId = order.buyerId;
-    const id = sellerId + buyerId;
 
-    try {
-      const res = await newRequest.get(`/conversations/single/${id}`);
-      navigate(`/message/${res.data.id}`);
-    } catch (err) {
-      if (err.response.status === 404) {
-        const res = await newRequest.post(`/conversations/`, {
-          to: currentUser.seller ? buyerId : sellerId,
-        });
-        navigate(`/message/${res.data.id}`);
-      }
-    }
-  };
+    const hash = await client.sendTransaction({
+      account,
+      to: addr,
+      value: parseEther(amount)
+    })
+    console.log("calişti")
+
+  }
+
+
+
   return (
     <div className="orders">
-      {isLoading ? (
-        "loading"
-      ) : error ? (
-        "error"
-      ) : (
-        <div className="container">
-          <div className="title">
-            <h1>Orders</h1>
-          </div>
-          <table>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Contact</th>
-            </tr>
-            {data.map((order) => (
-              <tr key={order._id}>
-                <td>
-                  <img className="image" src={order.img} alt="" />
-                </td>
-                <td>{order.title}</td>
-                <td>{order.price}</td>
-                <td>
-                  <img
-                    className="message"
-                    src="./img/message.png"
-                    alt=""
-                    onClick={() => handleContact(order)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </table>
+
+      <div className="container">
+        <div className="title">
+          <h1>Orders</h1>
         </div>
-      )}
+        <table>
+          <tr>
+            <th>Freeleancer Name</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>work delivery</th>
+          </tr>
+
+          <tr >
+            <td>
+              burak3
+            </td>
+            <td>Gig 4 Title</td>
+            <td>151</td>
+            <td>
+              <button onClick={() => sendByt("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", '151')}>
+                <img
+                  className="message"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt_-FeMUEwVpci5zBFjtR6SK0MXZ9umfFtBg&usqp=CAU"
+                  alt=""
+                />
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
     </div>
   );
 };
